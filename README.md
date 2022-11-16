@@ -8,7 +8,7 @@ Last month I finally decided to hack my 3DS with custom firmware and with Outdoo
 
 NOTE: This project does presume that your 3DS/N3DS already has FBI install and CFW running. 
 
-![labday2022](./images/labday2022.png)
+![hello outdoorsy](./images/HelloOutdoorsy.jpeg)
 
 # Lab Day 1
 
@@ -180,7 +180,7 @@ Fortunately, the 3DS with Rosaline menu allows me to take screenshots and we can
 
 Additionally, we can now take a screenshot of the `lab_day_project` app:
 
-![hello outdoorsy](./images/HelloOutdoorsy.jpeg)
+![labday2022](./images/labday2022.png)
 
 I wanted to reveal that over FBI install but at least we now know the app does work. 
 
@@ -294,11 +294,14 @@ then it showing up on the home page of the 3DS
 
 I couldn't let this project end without installing the app via the QR code. I think that feature is too cool. So here's a youtube video of it working:
 
-![QRCode](./lab_day_project/qrcode.png)
+Click image to be redirected to Youtube
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=31vYNT75wng" target="_blank">
- <img src="http://img.youtube.com/vi/31vYNT75wng/mqdefault.jpg" alt="Watch the video" width="240" height="180" border="10" />
+ <img src="http://img.youtube.com/vi/31vYNT75wng/mqdefault.jpg" alt="Watch the video" width="760" height="375" border="10" />
 </a>
+
+Scan the QR Code yourself if you want to install the CIA ![QRCode](./lab_day_project/qrcode.png)
+
 
 # What I learned
 

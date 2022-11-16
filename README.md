@@ -42,7 +42,7 @@ built ... hello-world.3dsx
 
 SDK and test compiling done. phew.
 
-### Emulating the 3DS
+## Emulating the 3DS
 
 Now we compiled the code and made a couple of files. After looking what each one was here's a breakdown:
 
@@ -70,21 +70,95 @@ Emulation is working on nightly-1782, nice hello world:
 
 ![hello world](./images/helloworld.png)
 
-## The project
+## Stream lining app installation
 
-Since this is a 3DS and all, there are 3 goals I want to accomplish on this lab day
+I had an idea for a program but it would require internet access. From what I've read Citra doesn't allow that, which I was able to confirm with one of the network examples. Still, maybe the console itself will work with the network code. I really don't want to have to remove the backplate (which has 2 screw) and pop out the MicroSD card each time I test code, so in this section I'm going to figure out how to stream line homebrew app installation using FBI.
 
-1. Using the touch screen + keyboard to type into an input box
-2. Using the Networking code to speak to an API
-3. Display API results.
+FBI is an open source title manager with a bunch of features but the one I want to leverage is QR code CIA scanning. For an app/game to install on the 3DS home screen, the app must be compiled as a CIA file. At the moment our Make file only gives us a .3DSx file. We put put 3DSx files on the MicroSD card but the games wont appear on the home screen (and FBI doesn't move from LAN to the 3DS folder, so doesn't matter for us anyways). Instead we'd need to enter a homebrew booting app, which just isn't time efficent. 
 
-Naturally, since this is an Outdoorsy Lab day, let's talk to our public search API by Keyword (which just happens to the same requirements for the iOS interview code test). I wish we could easily show images but because this is a video game console that expects sprite sheets in the form of .t3x or .bin, this app will have to be text based only.
+So first we need a way to convert .3dsx files to .cia, when we can explore how to install the game over the network.
+
+It looks like to convert this file we need two new toold `cxitool` and `makerom`. I found [documentation](https://gbatemp.net/threads/cxitool-convert-3dsx-to-cia-directly.440385/) describing the process but after 30 minutes, it seems this might be harder than expected.
+
+First, these two tools aren't natively part of DevKitPro, or at least not accessibly through as seen in command line example:
+
+```
+cxitool game.3dsx game.cia
+makerom -f cia -o game.cia -target t -i game.cxi:0:0
+```
+
+We must figure out a way to either install these tools or link them as aliases to use them. Seeing that the DevKitPro [source](https://github.com/devkitPro/3dstools/tree/cxi-stuff) apparently has them, I'm not seeing them in my 3DS tool kit:
+
+``` 
+Johns-Computer:bin$ pwd
+/opt/devkitpro/tools/bin
+
+Johns-Computer:bin$ ls
+3dslink*         bmp2bin*         mkbcfnt*         ndstool*         r4denc*
+3dsxdump*        dlditool*        mkromfs3ds*      padbin*          raw2c*
+3dsxtool*        dslink*          mmutil*          picasso*         smdhtool*
+bin2s*           grit*            nds_texcompress* pkg-config*      tex3ds*
+```
+
+### Compiling cxitool
+
+I download [cxi-stuff](https://github.com/devkitPro/3dstools/tree/cxi-stuff) and run the following to compile the tools:
+
+```
+$ ./autogen.sh
+$ ./configure
+$ make
+```
+
+and now we have a few new tools:
+
+```
+3dstools-cxi-stuff$ ls
+3dsxdump*       ChangeLog       Makefile.in     autogen.sh*     config.log      configure.ac    missing*
+3dsxtool*       INSTALL         NEWS            autom4te.cache/ config.status*  cxitool*        smdhtool*
+AUTHORS         Makefile        README          compile*        config.sub*     depcomp*        src/
+COPYING         Makefile.am     aclocal.m4      config.guess*   configure*      install-sh*
+```
+
+Naturally we'd want to move `cxitool` into `/opt/devkitpro/tools/bin` but I was reading that on SDK updates these folders get wiped. I did it anyways, but more of a warning.
+
+```
+$ sudo cp ./cxitool /opt/devkitpro/tools/bin/
+```
+
+So now we test converting and it works!
+
+```
+$ cxitool test.3dsx test.cia
+```
+
+### Creating a QRCode for FBI
+
+Since `cxitool` make the cia, I don't think we need to worry about the second tool `makerom` as I don't want a ``.cxi` file.
+
+One of the most amazing features of 3DS custom firmware and the app that have been released are the ease of installing software. I must not be the only one who is annoyed with unscrewing and transfering files to the MicroSD card. Someone on the FBI team had the clever idea use the 3DS camera to use QR codes to download remote CIA files and install them directly to the device. This is how we'll quickly be able to test compiled apps on the device.
+
+We need to build a QR Code linking to publicly hosted `.CIA` file of our app. Since we are starting to actually program something more than a Hello world, I started a project directory called `lab_day_project` that'll be referenced for the remainder of this section.
+
+Inside `lab_day_project` we see the following:
+
+```
+$ ls
+Makefile              lab_day_project.3dsx  lab_day_project.elf*  source/
+build/                lab_day_project.cia   lab_day_project.smdh
+```
+
+Since this repo is hosted publicly on Github, it only makes sense to upload the .cia file of our app, and store the QR code in the same file. From there we can test installing it via FBI.
+
+If you plan on making your own CIAs installable view QR code you'll need to approach this in two steps.
+
+1. Upload your cia file to github
+2. Create a QR Code pointing to that github direct url to the cia file.
+
+For creating a QR Code I used https://www.qrcode.es/es/generador-qr-code/
 
 
-
-
-
-
+ 
 ## SDK Documentation
 
 coming soon

@@ -4,7 +4,7 @@ A couple years back I really got into [Nintendo DS homebrew development](https:/
 
 Earlier this year Nintendo announced that it would be closing the eshop, it's app store, March 27, 2023. and as of August 29, 2022 no one can add funds to their account to purchase from the eshop. This also meant that the 3DS would soon stop getting updates and the Nintendo Switch will be their biggest focus. I can safely say to my moral standards the lifecycle has ended.
 
-Last month I finally decided to hack my 3DS with custom firmware and with Outdoorsy Lab day, I am finally getting a chance to mess around with homebrew development on the system. This repo is write up of the research and progress I made onf the first Lab day (Nov 16th, 2022).
+Last month I finally decided to hack my 3DS with custom firmware and with Outdoorsy Lab day, I am finally getting a chance to mess around with homebrew development on the system. This repo is write up of the research and progress I made on the first Lab day (Nov 16th, 2022).
 
 NOTE: This project does presume that your 3DS/N3DS already has FBI install and CFW running. 
 
@@ -133,9 +133,9 @@ So now we test converting and it works!
 $ cxitool test.3dsx test.cia
 ```
 
-### Creating a QRCode for FBI
+NOTE: cxitool is for converting .3dsx files to .xci the original documentation I found was wrong. You can't convert to .cia with it. Read below on how to actually use cxitool
 
-Since `cxitool` make the cia, I don't think we need to worry about the second tool `makerom` as I don't want a `.cxi` file.
+### Creating a QRCode for FBI
 
 One of the most amazing features of 3DS custom firmware and the app that have been released are the ease of installing software. I must not be the only one who is annoyed with unscrewing and transfering files to the MicroSD card. Someone on the FBI team had the clever idea use the 3DS camera to use QR codes to download remote CIA files and install them directly to the device. This is how we'll quickly be able to test compiled apps on the device.
 
@@ -224,7 +224,7 @@ Options:
   -?, --help              Displays this text
  ```
 
- If you notice, the man shows `.3dsx` to `.cxi` the original poster of how to use `cxitool` mixed it.
+ If you notice, the man shows `.3dsx` to `.cxi` the original poster of how to use `cxitool` documented it wrong.
 
  I found `makerom` here: https://github.com/3DSGuy/Project_CTR/releases/tag/makerom-v0.18.3
 
@@ -278,7 +278,7 @@ $ cxitool lab_day_project.3dsx lab_day_project.cxi
 $ makerom -v -f cia -o lab_day_project.cia -target t -i lab_day_project.cxi:0:0 -ignoresign -icon lab_day_project.smdh
 ```
 
-And it finally workes. I tested installing via FBI directly off the MicroSD card and below are some screenshots of it working:
+And it finally works. I tested installing via FBI directly off the MicroSD card and below are some screenshots of it in action:
 
 ![installing_from_fbi.png](./images/installing_from_fbi.png)
 
@@ -294,7 +294,7 @@ then it showing up on the home page of the 3DS
 
 I couldn't let this project end without installing the app via the QR code. I think that feature is too cool. So here's a youtube video of it working:
 
-Click image to be redirected to Youtube
+*Click image to be redirected to Youtube*
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=31vYNT75wng" target="_blank">
  <img src="http://img.youtube.com/vi/31vYNT75wng/mqdefault.jpg" alt="Watch the video" width="760" height="375" border="10" />
@@ -307,7 +307,7 @@ Scan the QR Code yourself if you want to install the CIA
 
 # What I learned
 
-Open Source homebrew tools for the 3DS are not documented very well. If anything, this project is probably going to be a massive help to community because I debugged the tools to a point that actual documentation exists. I also thought I'd be able to create a better project but who knew getting the tools working would require so much time.
+Open Source home-brew tools for the 3DS are not documented very well. If anything, this project is probably going to be a massive help to community because I debugged the tools to a point that actual documentation exists. I also thought I'd be able to create a better project but who knew getting the tools working would require so much time.
 
 I don't think I would have had a chance dig this deep on 3DS development if it wasn't for Lab day at Outdoorsy. I hope we have a second one that will allow me to maybe produce something worth playing. Still it feels great to show off a text based app all in one day.
 

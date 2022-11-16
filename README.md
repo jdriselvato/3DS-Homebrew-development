@@ -300,7 +300,9 @@ Click image to be redirected to Youtube
  <img src="http://img.youtube.com/vi/31vYNT75wng/mqdefault.jpg" alt="Watch the video" width="760" height="375" border="10" />
 </a>
 
-Scan the QR Code yourself if you want to install the CIA ![QRCode](./lab_day_project/qrcode.png)
+Scan the QR Code yourself if you want to install the CIA 
+
+![QRCode](./lab_day_project/qrcode.png)
 
 
 # What I learned

@@ -136,7 +136,7 @@ $ cxitool test.3dsx test.cia
 
 ### Creating a QRCode for FBI
 
-Since `cxitool` make the cia, I don't think we need to worry about the second tool `makerom` as I don't want a ``.cxi` file.
+Since `cxitool` make the cia, I don't think we need to worry about the second tool `makerom` as I don't want a `.cxi` file.
 
 One of the most amazing features of 3DS custom firmware and the app that have been released are the ease of installing software. I must not be the only one who is annoyed with unscrewing and transfering files to the MicroSD card. Someone on the FBI team had the clever idea use the 3DS camera to use QR codes to download remote CIA files and install them directly to the device. This is how we'll quickly be able to test compiled apps on the device.
 
@@ -183,16 +183,29 @@ Additionally, we can now take a screenshot of the `lab_day_project` app:
 
 ![hello outdoorsy](./images/HelloOutdoorsy.jpeg)
 
-
 I wanted to reveal that over FBI install but at least we now know the app does work. 
 
-### Alternative way to create .cia
+### Alternative approaches to `.cia` install
 
-So we know the app works in `.3dsx` form. Because I'm stubborn I still want to be able to install over FBI QR Code we can just let the 3DS convert it to the `.cia` for us with Godmode9
+#### Godmode9 - failed
+
+So we know the app works in `.3dsx` form. Because I'm stubborn I still want to be able to install over FBI QR Code we can just let the 3DS convert it to the `.cia` for us with Godmode9.
 
 Holding down `start` on 3DS boot will give you access to GodMode9 (if installed). From here press `home` button -> Scripts -> GM9Megascript -> Misc -> .3ds -> .cia converter
 
 NOTE: You'll need to move the .3dsx file to root/gm9/in else the script wont know what to convert.
+
+But after doing this I learn there's a difference between `.3dsx` and `.3ds` files, and Godmode9 only support `.3ds`.
+
+#### Instal from FBI directly from SD - failed
+
+This also failed, FBI doesn't recognized the `.cia` file we made as something to install. Meaning, our converter did what?
+
+At least now we can look `cxitool` to see of there are any options or something.
+
+#### cxitool w/ options
+
+
  
 ## SDK Documentation
 

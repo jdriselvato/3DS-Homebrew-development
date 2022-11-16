@@ -1,0 +1,10 @@
+bin/
+build/
+lib/
+.*/
+*.3dsx
+*.smdh
+*.elf
+*.t3x
+*.bcfnt
+*~

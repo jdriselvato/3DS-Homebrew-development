@@ -51,7 +51,25 @@ Now we compiled the code and made a couple of files. After looking what each one
 [appname].smdh: The icon/metadata.
 ```
 
-Which meant we needed an 3DS emulator to test the executable.
+Which meant we needed an 3DS emulator to test the executable. I could probably test it on console at this point but the moving of files between SD cards and booting the system and installing will make for a terribly slow testing process. 
+
+The most popular 3DS emulator is [Citra](https://citra-emu.org) 
+
+> Notice: Citra does NOT support Macs with M1 chipsets. Our Mac builds may run through Rosetta, but you WILL encounter various issues that we won't provide support for. We may eventually support M1 Macs, but not at this time.
+
+Fortunately, I'm still running a 2017 Intel MacBook Pro but that isn't enough. Cause trying to load our hello world, I get this error:
+
+```
+Your GPU may not support OpenGL 4.3, or you do not have the latest graphics driver.
+```
+
+Turns out MacOS has support for really outdated OpenGL and latest Citra has drop compatability until further notice. The forums recommend downloading this build instead: https://github.com/citra-emu/citra-nightly/releases/tag/nightly-1782
+
+
+Emulation is working on nightly-1782, nice hello world:
+
+![hello world](./images/helloworld.png)
+
 
 ## SDK Documentation
 

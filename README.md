@@ -70,6 +70,20 @@ Emulation is working on nightly-1782, nice hello world:
 
 ![hello world](./images/helloworld.png)
 
+## The project
+
+Since this is a 3DS and all, there are 3 goals I want to accomplish on this lab day
+
+1. Using the touch screen + keyboard to type into an input box
+2. Using the Networking code to speak to an API
+3. Display API results.
+
+Naturally, since this is an Outdoorsy Lab day, let's talk to our public search API by Keyword (which just happens to the same requirements for the iOS interview code test). I wish we could easily show images but because this is a video game console that expects sprite sheets in the form of .t3x or .bin, this app will have to be text based only.
+
+
+
+
+
 
 ## SDK Documentation
 

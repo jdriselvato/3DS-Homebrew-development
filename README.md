@@ -314,4 +314,8 @@ I don't think I would have had a chance dig this deep on 3DS development if it w
 # Resources
 
 - Introduction link: https://xem.github.io/3DShomebrew/
-- Installing the SDK: hhttps://devkitpro.org/wiki/Getting_Started
+- Installing the SDK: https://devkitpro.org/wiki/Getting_Started
+- 3DS example code from DevKitPro: https://github.com/devkitPro/3ds-examples
+- Additional dev tools (cxitool): https://github.com/devkitPro/3dstools/tree/cxi-stuff
+- Additional dev tools (makerom): https://github.com/3DSGuy/Project_CTR/releases/tag/makerom-v0.18.3
+- What finally made me figure out cxi to cia: https://github.com/angband/angband/pull/5376/files/9aa22549569005d07f7f9ad017c52249616e979a#diff-43e1d01754af038f525a82f957d2f392b29fb2be7e160423ce0dd9dde354fb6e

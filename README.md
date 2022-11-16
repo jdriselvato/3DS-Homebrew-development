@@ -82,12 +82,14 @@ So first we need a way to convert .3dsx files to .cia, when we can explore how t
 
 It looks like to convert this file we need two new toold `cxitool` and `makerom`. I found [documentation](https://gbatemp.net/threads/cxitool-convert-3dsx-to-cia-directly.440385/) describing the process but after 30 minutes, it seems this might be harder than expected.
 
-First, these two tools aren't natively part of DevKitPro, or at least not accessibly through as seen in command line example:
+First, these two tools aren't natively part of DevKitPro, or at least not accessibly through as seen in command line example (from gbatemp):
 
 ```
-cxitool game.3dsx game.cia
-makerom -f cia -o game.cia -target t -i game.cxi:0:0
+$ cxitool game.3dsx game.cxi
+$ makerom -f cia -o game.cia -target t -i game.cxi:0:0
 ```
+
+NOTE: The example on gbatemp was wrong and I fixed it above. They were using cxitool to convert the `.3dsx` to `.cia` but cxitool can't even do that, it only converts to `.cxi`.
 
 We must figure out a way to either install these tools or link them as aliases to use them. Seeing that the DevKitPro [source](https://github.com/devkitPro/3dstools/tree/cxi-stuff) apparently has them, I'm not seeing them in my 3DS tool kit:
 
@@ -197,19 +199,111 @@ NOTE: You'll need to move the .3dsx file to root/gm9/in else the script wont kno
 
 But after doing this I learn there's a difference between `.3dsx` and `.3ds` files, and Godmode9 only support `.3ds`.
 
-#### Instal from FBI directly from SD - failed
+----
+
+#### Install from FBI directly from SD - failed
 
 This also failed, FBI doesn't recognized the `.cia` file we made as something to install. Meaning, our converter did what?
 
 At least now we can look `cxitool` to see of there are any options or something.
 
-#### cxitool w/ options
+
+## cxitool & makerom
+
+Never follow the tutorial of someone else without looking at the man page of the tools yourself. 
+
+Here's the `xcitool` man page:
+
+```
+cxitool man
+Usage: cxitool [options] input.3dsx output.cxi
+Options:
+  -n, --name=<value>      Specifies the process name of the application
+  -c, --code=<value>      Specifies the product code of the application
+  -t, --tid=<value>       Specifies the title ID of the application
+  -s, --settings=<file>   Specifies the settings file
+  -b, --banner=<file>     Specifies the banner file to embed in the CXI
+  -v, --version           Displays version information
+  -?, --help              Displays this text
+ ```
+
+ If you notice, the man shows `.3dsx` to `.cxi` the original poster of how to use `cxitool` mixed it.
+
+ I found `makerom` here: https://github.com/3DSGuy/Project_CTR/releases/tag/makerom-v0.18.3
+
+```
+$ sudo cp makerom /opt/devkitpro/tools/bin/
+```
+
+Here's the `makerom` man file:
+
+```
+$ makerom
+CTR MAKEROM v0.18.3 (C) 3DSGuy 2022
+Built: 11:05:11 Apr 22 2022
+
+Usage: makerom [options... ]
+Option          Parameter           Explanation
+GLOBAL OPTIONS:
+ -help                              Display this text
+ -exthelp                           Display extended usage help
+ -rsf           <file>              ROM Spec File (*.rsf)
+ -f             <ncch|cci|cia>      Output format, defaults to 'ncch'
+ -o             <file>              Output file
+ -v                                 Verbose output
+ -DNAME=VALUE                       Substitute values in RSF file
+NCCH OPTIONS:
+ -elf           <file>              ELF file
+ -icon          <file>              Icon file
+ -banner        <file>              Banner file
+ -desc          <apptype>:<fw>      Specify Access Descriptor template
+NCCH REBUILD OPTIONS:
+ -code          <file>              Decompressed ExeFS ".code"
+ -exheader      <file>              Exheader template
+ -romfs         <file>              RomFS binary
+CIA/CCI OPTIONS:
+ -content       <file>:<index>      Specify content files
+ -ver           <version>           Title Version
+ ```
 
 
- 
-## SDK Documentation
+---
 
-coming soon
+It seems the [documentation](https://github.com/3DSGuy/Project_CTR/blob/master/makerom/README.md) for makerom will help us get there but the makerom example from gbatemp doesn't work. 
+
+1. create a `.rsi` file (yaml configuration file is required for creating NCCH files)
+2. create a `.cfa` file `makerom -o lab_day_project.cfa -rsf lab_day_project.rsf -target t`
+
+Here's the real commands to convert `.3dsx` to a `.cia`
+
+```
+$ cxitool lab_day_project.3dsx lab_day_project.cxi
+$ makerom -v -f cia -o lab_day_project.cia -target t -i lab_day_project.cxi:0:0 -ignoresign -icon lab_day_project.smdh
+```
+
+And it finally workes. I tested installing via FBI directly off the MicroSD card and below are some screenshots of it working:
+
+![installing_from_fbi.png](./images/installing_from_fbi.png)
+
+the installation success alert
+
+![newsoftware.bmp](./images/newsoftware.bmp)
+
+then it showing up on the home page of the 3DS
+
+![homescreen_installed.png](./images/homescreen_installed.png)
+
+### FBI QR Code install
+
+I couldn't let this project end without installing the app via the QR code. I think that feature is too cool. So here's a youtube video of it working:
+
+
+
+# What I learned
+
+Open Source homebrew tools for the 3DS are not documented very well. If anything, this project is probably going to be a massive help to community because I debugged the tools to a point that actual documentation exists. I also thought I'd be able to create a better project but who knew getting the tools working would require so much time.
+
+I don't think I would have had a chance dig this deep on 3DS development if it wasn't for Lab day at Outdoorsy. I hope we have a second one that will allow me to maybe produce something worth playing. Still it feels great to show off a text based app all in one day.
 
 # Resources
 

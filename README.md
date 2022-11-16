@@ -6,6 +6,8 @@ Earlier this year Nintendo announced that it would be closing the eshop, it's ap
 
 Last month I finally decided to hack my 3DS with custom firmware and with Outdoorsy Lab day, I am finally getting a chance to mess around with homebrew development on the system. This repo is write up of the research and progress I made onf the first Lab day (Nov 16th, 2022).
 
+NOTE: This project does presume that your 3DS/N3DS already has FBI install and CFW running. 
+
 # Lab Day 1
 
 ## SDK installation process
@@ -155,9 +157,42 @@ If you plan on making your own CIAs installable view QR code you'll need to appr
 1. Upload your cia file to github
 2. Create a QR Code pointing to that github direct url to the cia file.
 
-For creating a QR Code I used https://www.qrcode.es/es/generador-qr-code/
+For creating a QR Code I used https://www.thonky.com/qrcode/#qr-container
+
+### Scanning the QRCode for FBI - attempt 1
+
+The above steps will generate you a public facing URL to your CIA but now we must cross our fingers to see if the `CIA` file we made actually works on the 3DS. My heart is pumping cause I really don't want to spend more time building `CIA` files when at this point I could have just dragged the `3DSX` file to the MicroSD card.
+
+I boot FBI -> Remote Install -> Camera -> Post on #mobile-team on slack for the team to cross their fingers with me -> scan the QR Code -> `Failed to install fromURL`
+
+----
+
+I stopped for lunch and thought it over why this might work. The lack of documentation for alot of these tools doesn't help either. But I think I must do what I've been avoiding the entire time, popping off the back plate and plugging the MicroSD into my computer. If the `.3dsx` file works natively, then we can point to the `.cia` conversion as the problem. At least now I can document running `.3dsx` files from the 3DS natively.
+
+1. If you properly installed cfw, you should have a `/3ds/` folder on the root of your MicroSD, just drag and drop it. 
+2. Boot your 3DS and open the *The homebrew launcher app* (I'm using v2.4.0)
+3. scroll down to your project
+
+Viewing the .3dsx file for the first we can learn a lot about the program. It's name, the factor it's not authorized and it has a subtext of "Built with devkitArm & libctru"
+
+Fortunately, the 3DS with Rosaline menu allows me to take screenshots and we can see our project below:
+
+![screenshot of homebrew launcher](./images/screenshot1.bmp)
+
+Additionally, we can now take a screenshot of the `lab_day_project` app:
+
+![hello outdoorsy](./images/HelloOutdoorsy.jpeg)
 
 
+I wanted to reveal that over FBI install but at least we now know the app does work. 
+
+### Alternative way to create .cia
+
+So we know the app works in `.3dsx` form. Because I'm stubborn I still want to be able to install over FBI QR Code we can just let the 3DS convert it to the `.cia` for us with Godmode9
+
+Holding down `start` on 3DS boot will give you access to GodMode9 (if installed). From here press `home` button -> Scripts -> GM9Megascript -> Misc -> .3ds -> .cia converter
+
+NOTE: You'll need to move the .3dsx file to root/gm9/in else the script wont know what to convert.
  
 ## SDK Documentation
 

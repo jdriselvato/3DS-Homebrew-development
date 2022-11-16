@@ -8,6 +8,8 @@ Last month I finally decided to hack my 3DS with custom firmware and with Outdoo
 
 NOTE: This project does presume that your 3DS/N3DS already has FBI install and CFW running. 
 
+![labday2022](./images/labday2022.png)
+
 # Lab Day 1
 
 ## SDK installation process
@@ -84,12 +86,7 @@ It looks like to convert this file we need two new toold `cxitool` and `makerom`
 
 First, these two tools aren't natively part of DevKitPro, or at least not accessibly through as seen in command line example (from gbatemp):
 
-```
-$ cxitool game.3dsx game.cxi
-$ makerom -f cia -o game.cia -target t -i game.cxi:0:0
-```
-
-NOTE: The example on gbatemp was wrong and I fixed it above. They were using cxitool to convert the `.3dsx` to `.cia` but cxitool can't even do that, it only converts to `.cxi`.
+NOTE: The example on gbatemp was wrong and I fixed it later in this doc. They were using cxitool to convert the `.3dsx` to `.cia` but cxitool can't even do that, it only converts to `.cxi`.
 
 We must figure out a way to either install these tools or link them as aliases to use them. Seeing that the DevKitPro [source](https://github.com/devkitPro/3dstools/tree/cxi-stuff) apparently has them, I'm not seeing them in my 3DS tool kit:
 
@@ -297,7 +294,11 @@ then it showing up on the home page of the 3DS
 
 I couldn't let this project end without installing the app via the QR code. I think that feature is too cool. So here's a youtube video of it working:
 
+![QRCode](./lab_day_project/qrcode.png)
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=31vYNT75wng" target="_blank">
+ <img src="http://img.youtube.com/vi/31vYNT75wng/mqdefault.jpg" alt="Watch the video" width="240" height="180" border="10" />
+</a>
 
 # What I learned
 
